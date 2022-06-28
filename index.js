@@ -3,7 +3,7 @@ const cors = require('cors');
 const mongoose = require("mongoose");
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 const healthMessage = `Server is running at ${port}`;
 const environment = require('./environment')
 
