@@ -10,7 +10,7 @@ exports.getByResource = (req, res) => {
 
   const expression = [
     { $match: condition },
-    { $group: {_id: "$date", total: { $sum: "$total" } } }
+    { $group: {_id: "$date", totalSales: { $sum: "$total" }, totalFranchiseeFee: { $sum: { $multiply: [ "$subtotal", 0.1 ] } } } }
   ];
 
   Sales.aggregate(expression)

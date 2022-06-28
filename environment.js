@@ -1,5 +1,5 @@
 const dev = {
-    'MONGODB_URL' : 'mongodb://localhost:27017/unit-dev-exam'
+    'MONGODB_URL' : 'mongodb+srv://unitdevexam:unitdevexam@cluster0.epvag.mongodb.net/unitdevexam?retryWrites=true&w=majority'
 };
 
 module.exports = dev;
