@@ -1,12 +1,13 @@
 const Sales = require("./model");
 
 exports.getByResource = (req, res) => {
-  const resourceTypeId = resourceType[req.params.resource];
-
   let condition = {};
-  condition[resourceTypeId] = req.params.id;
 
   if (req.query.date) condition['date'] = req.query.date;
+  if (req.query.location) condition['location_id'] = {'$in' : req.query.location.split(',')};
+  if (req.query.franchisee) condition['franchisee_id'] = {'$in' : req.query.franchisee.split(',')};
+
+  console.log('condition', condition);
 
   const expression = [
     { $match: condition },
@@ -17,20 +18,15 @@ exports.getByResource = (req, res) => {
     .then((data) => {
       if (!data.length) {
         return res.status(404).send({
-          message: `Sales not found with ${resourceTypeId} : ${req.params.id}`,
+          message: `Sales not found with the given request`,
         });
       }
       res.send({data});
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error retrieving Sales with ${resourceTypeId} : ${req.params.id}`,
+        message: `Error retrieving Sales with the given request`,
       });
     });
 };
-
-const resourceType = {
-  franchisee : 'franchisee_id',
-  location : 'location_id'
-}
 
